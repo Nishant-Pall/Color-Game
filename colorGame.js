@@ -8,8 +8,9 @@ var colors = [
 ];
 
 var squares = document.querySelectorAll(".square");
-var pickedColor = colors[3];
+var pickedColor = pickColor();
 var colorDisplay = document.getElementById("colorDisplay");
+var messageDisplay = document.querySelector('#message');
 
 colorDisplay.textContent = pickedColor;
 
@@ -20,10 +21,25 @@ for(var i=0; i<squares.length; i++){
 	// add click listeners to squares
 	squares[i].addEventListener("click",function(){
 		//grab color of clicked square
-		var clickColor = this.style.backgroundColor;
+		var clickedColor = this.style.backgroundColor;
 		//compare to pickedColor
-		if(clickColor === pickedColor){
-			
+		if(clickedColor === pickedColor){
+			messageDisplay.textContent = "Correct!";
+			changeColors(clickedColor);
+		} else{
+			this.style.backgroundColor = "#232323";
+			messageDisplay.textContent = "Try again";
 		}
 	});
+}
+function changeColors(color){
+	// Loop through all squares
+	for(var i = 0;i <squares.length; i++){
+		squares[i].style.backgroundColor = color;
+	}
+}
+
+function pickColor(){
+	var random = Math.floor(Math.random() * colors.length);
+	return colors[random];
 }
